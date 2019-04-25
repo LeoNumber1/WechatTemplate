@@ -1,2 +1,2 @@
 # WechatTemplate
-Golang实现发送微信模板消息（每日一句和天气预报）
+Golang实现发送微信公众号模板消息
