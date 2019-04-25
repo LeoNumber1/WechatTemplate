@@ -30,10 +30,8 @@ type sentence struct {
 }
 
 func main() {
-	//spec := "0/1 * * * * *" // 每1秒
 	spec := "0 0 12 * * *" // 每天12:00
 	spec1 := "0 0 7 * * *" // 每天早晨7:00
-	//spec1 := "0 0/1 * * * *" // 每1分钟
 	c := cron.New()
 	c.AddFunc(spec, everydaysen)
 	c.AddFunc(spec1, weather)
@@ -44,6 +42,7 @@ func main() {
 	//everydaysen()
 }
 
+//发送每日一句
 func everydaysen() {
 	req, fxurl := getsen()
 	if req.Content == "" {
@@ -65,6 +64,7 @@ func everydaysen() {
 	}
 }
 
+//发送天气预报
 func weather() {
 	access_token := getaccesstoken()
 	if access_token == "" {
@@ -92,6 +92,7 @@ func weather() {
 	fmt.Println("weather is ok")
 }
 
+//获取微信accesstoken
 func getaccesstoken() string {
 	url := fmt.Sprintf("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%v&secret=%v", APPID, APPSECRET)
 	resp, err := http.Get(url)
@@ -116,6 +117,7 @@ func getaccesstoken() string {
 	return token.AccessToken
 }
 
+//获取每日一句
 func getsen() (sentence, string) {
 	resp, err := http.Get("http://open.iciba.com/dsapi/?date")
 	sent := sentence{}
@@ -140,6 +142,7 @@ func getsen() (sentence, string) {
 	return sent, fenxiangurl
 }
 
+//获取关注者列表
 func getflist(access_token string) []gjson.Result {
 	url := "https://api.weixin.qq.com/cgi-bin/user/get?access_token=" + access_token + "&next_openid="
 	resp, err := http.Get(url)
@@ -157,6 +160,7 @@ func getflist(access_token string) []gjson.Result {
 	return flist
 }
 
+//发送模板消息
 func templatepost(access_token string, reqdata string, fxurl string, templateid string, openid string) {
 	url := "https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=" + access_token
 
@@ -180,6 +184,7 @@ func templatepost(access_token string, reqdata string, fxurl string, templateid 
 	fmt.Println(string(body))
 }
 
+//获取天气
 func getweather(city string) (string, string, string, string) {
 	url := fmt.Sprintf("https://www.tianqiapi.com/api?version=%s&city=%s", WeatherVersion, city)
 	resp, err := http.Get(url)
@@ -204,6 +209,7 @@ func getweather(city string) (string, string, string, string) {
 	return day, wea, tem, air_tips
 }
 
+//发送天气
 func sendweather(access_token, city, openid string) {
 	day, wea, tem, air_tips := getweather(city)
 	if day == "" || wea == "" || tem == ""|| air_tips == "" {
