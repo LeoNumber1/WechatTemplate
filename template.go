@@ -13,8 +13,8 @@ import (
 var (
 	APPID          = "*********"
 	APPSECRET      = "**************"
-	SentTemplateID = "0U-LzrPOkwGsg0GwCEcNuEfmotI-JYsX60WqO0tIJdo"
-	WeatTemplateID = "YBF_WVK2Bbq2ChkDa4PGecZ8UnQsqugqbfolZedP-Sc"
+	SentTemplateID = "0U-LzrPOkwGsg0GwCEcNuEfmotI-JYsX60WqO0tIJdo"	//每日一句的模板ID，替换成自己的
+	WeatTemplateID = "YBF_WVK2Bbq2ChkDa4PGecZ8UnQsqugqbfolZedP-Sc"  //天气模板ID，替换成自己的
 	WeatherVersion = "v1"
 )
 
